@@ -1,10 +1,9 @@
 {
-  "business": "/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pIUWlnQVAB?ceid=GB:en&hl=en-GB&gl=GB",
-  "nation": "/CAAqIQgKIhtDQkFTRGdvSUwyMHZNRGR6YzJNU0FtVnVLQUFQAQ?ceid=GB:en&hl=en-GB&gl=GB",
-  "entertainment": "/CAAqJggKIiBDQkFTRWdvSUwyMHZNREpxYW5RU0FtVnVHZ0pIUWlnQVAB?ceid=GB:en&hl=en-GB&gl=GB",
-  "science": "/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFp0Y1RjU0FtVnVHZ0pIUWlnQVAB?ceid=GB:en&hl=en-GB&gl=GB",
-  "world": "/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FtVnVHZ0pIUWlnQVAB?ceid=GB:en&hl=en-GB&gl=GB",
-  "sports": "/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFp1ZEdvU0FtVnVHZ0pIUWlnQVAB?ceid=GB:en&hl=en-GB&gl=GB",
-  "health": "/CAAqIQgKIhtDQkFTRGdvSUwyMHZNR3QwTlRFU0FtVnVLQUFQAQ?ceid=GB:en&hl=en-GB&gl=GB",
-  "technology": "/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtVnVHZ0pIUWlnQVAB?ceid=GB:en&hl=en-GB&gl=GB"
+  "cybersecurity": "/search?q=cybersecurity&hl=en-GB&gl=GB&ceid=GB:en",
+  "security": "/search?q=security&hl=en-GB&gl=GB&ceid=GB:en",
+  "technology": "/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqYjJNU0FtVnVLQUFQAQ",
+  "southern company": "/search?q=southern+company&hl=en-GB&gl=GB&ceid=GB:en",
+  "hacking": "/search?q=hacking&hl=en-GB&gl=GB&ceid=GB:en",
+  "cyber attack": "/search?q=cyber+attack&hl=en-GB&gl=GB&ceid=GB:en",
+  "cyber threat": "/search?q=cyber+threat&hl=en-GB&gl=GB&ceid=GB:en"
 }

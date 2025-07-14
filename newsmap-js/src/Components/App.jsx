@@ -6,7 +6,9 @@ import { ucfirst, luminance } from '../util.js';
 import defaultColours, * as palettes from '../colours.js';
 
 import editions from '../data/editions.json';
-import availableCategories from '../data/categories.json';
+// import availableCategories from '../data/categories.json';
+import { categories as availableCategories } from '../sources/GoogleNewsRSS';
+
 
 import './App.css';
 import { OptionsModal } from './OptionsModal.jsx';
@@ -157,6 +159,8 @@ class App extends Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.onResize);
+    localStorage.removeItem("state");
+
 
     document.addEventListener("visibilitychange", this.visibilityChangeCallback);
 

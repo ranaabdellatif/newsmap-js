@@ -222,6 +222,11 @@ function getPadding(maxWidth, maxHeight) {
 }
 
 function getAgedColour(base, age) {
+  if (typeof base !== 'string' || base.length < 7) {
+    // Provide a fallback color (gray) if invalid
+    base = "#999999";
+  }
+
   const k1 = 50 / 9;
   const k2 = 20 / 3;
   const c = 1 - (k1 / k2);

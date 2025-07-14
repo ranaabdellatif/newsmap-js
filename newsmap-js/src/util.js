@@ -2,7 +2,8 @@
  * Capitalise the first character of a string
  * @param {string} string
  */
-export function ucfirst (string) {
+export function ucfirst(string) {
+  if (typeof string !== 'string' || string.length === 0) return '';
   return string.substr(0, 1).toUpperCase() + string.substr(1);
 }
 
@@ -22,10 +23,11 @@ export function urlize (string) {
  * Return numerical luminance 0-255 from hex colour
  * @param {string} c Hex Colour #RRGGBB
  */
-export function luminance (c) {
-  const R = parseInt(c.substr(1,2), 16);
-  const G = parseInt(c.substr(3,2), 16);
-  const B = parseInt(c.substr(5,2), 16);
+export function luminance(c) {
+  if (typeof c !== 'string' || c.length < 7) return 0;  // fallback for invalid color
+  const R = parseInt(c.substr(1, 2), 16);
+  const G = parseInt(c.substr(3, 2), 16);
+  const B = parseInt(c.substr(5, 2), 16);
 
-  return (0.2126*R + 0.7152*G + 0.0722*B);
+  return (0.2126 * R + 0.7152 * G + 0.0722 * B);
 }

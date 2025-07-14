@@ -8,41 +8,10 @@ import { useCategoryItems } from './useCategoryItems.js';
 
 
 /**
- * @typedef Source
- * @prop {string} id
- * @prop {string} title
- * @prop {string} name
- * @prop {string} url
- */
-
-/**
- * @typedef Article
- * @prop {string} id
- * @prop {string} category
- * @prop {string} title
- * @prop {string} url
- * @prop {string} publishedAt
- * @prop {string} imageURL
- * @prop {Source[]} sources
- * @prop {number} weight
- */
-
-/**
- * @typedef Category
- * @prop {string} id
- * @prop {string} key
- * @prop {string} name
- * @prop {number} loadedAt
- * @prop {Article[]} articles
- * @prop {number} weight
- */
-
-/**
  * @param {object} props
- * @param {string} props.edition
+ * @param {string[]} props.categories
  * @param {"tree"|"grid"|"tree_mixed"} props.mode
  * @param {"time"|"sourceCount"|"sources"|"position"} props.weightingMode
- * @param {string[]} props.categories
  * @param {{[category: string]: string}} props.colours
  * @param {boolean} props.showImages
  * @param {boolean} props.showGradient
@@ -52,7 +21,6 @@ import { useCategoryItems } from './useCategoryItems.js';
  * @param {(article: Article, e: import('react').MouseEvent) => void} props.onArticleClick
  */
 function Edition({
-  edition,
   categories,
   mode,
   weightingMode,
@@ -64,32 +32,36 @@ function Edition({
   refreshTime,
   onArticleClick,
 }) {
-  let items = useCategoryItems(categories, refreshTime, edition, itemsPerCategory, weightingMode);
+  // ✅ Assign the result to a variable
+  const items = useCategoryItems(
+    categories,
+    refreshTime,
+    itemsPerCategory,
+    weightingMode
+  );
 
-  // Fast visual update
-  // (Article sizes update every 60 seconds, doesn't refetch)
-  useFastVisualRefresh(weightingMode === "time", 60 * 1000);
-
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     return null;
   }
 
+  useFastVisualRefresh(weightingMode === "time", 60 * 1000);
+
   const Map = {
-    "tree": TreeMap,
-    "grid": GridMap,
-    "tree_mixed": TreeMapMixed,
-  }[mode];
+    tree: TreeMap,
+    grid: GridMap,
+    tree_mixed: TreeMapMixed,
+  }[mode] || TreeMap;
 
   return (
     <Map
       items={items}
-      itemRender={props => (
+      itemRender={(props) => (
         <Article
           showImage={showImages}
           showGradient={showGradient}
           colours={colours}
           newTab={newTab}
-          onClick={e => onArticleClick(props.item, e)}
+          onClick={(e) => onArticleClick(props.item, e)}
           {...props}
         />
       )}
@@ -115,5 +87,3 @@ function useFastVisualRefresh(enable, timeout = 10 * 1000) {
     }
   }, [enable, timeout]);
 }
-
-

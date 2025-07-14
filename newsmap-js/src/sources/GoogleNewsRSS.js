@@ -1,10 +1,10 @@
 import { ucfirst, urlize } from '../util';
 
 const topicMap = {
-  CYBERSECURITY: 'cybersecurity',
-  SECURITY: 'security',
-  TECHNOLOGY: 'technology',
-  "SOUTHERN COMPANY": 'Southern+Company',
+  CYBERSECURITY: 'CAAqIQgKIhtDQkFTRGdvSUwyMHZNREl5ZUY4U0FtVnVLQUFQAQ',
+  SECURITY: 'CAAqIQgKIhtDQkFTRGdvSUwyMHZNR0puTW5BU0FtVnVLQUFQAQ',
+  TECHNOLOGY: 'CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtVnVHZ0pWVXlnQVAB',
+  "SOUTHERN COMPANY": 'CCAAqIggKIhxDQkFTRHdvSkwyMHZNREZqTkRocUVnSmxiaWdBUAE',
 };
 
 const searchMap = {
@@ -19,19 +19,25 @@ export const categories = [
 ];
 
 export async function getNews({ category }) {
-  const baseUrl = 'https://news.google.com/rss?';
-  let url;
+    let url;
 
-  if (topicMap[category]) {
-    url = `${baseUrl}topic=${topicMap[category]}&hl=en-US&gl=US&ceid=US:en`;
-  } else if (searchMap[category]) {
-    url = `${baseUrl}q=${searchMap[category]}&hl=en-US&gl=US&ceid=US:en`;
-  } else {
+    if (topicMap[category]) {
+    url = `https://news.google.com/rss/topics/${topicMap[category]}?hl=en-US&gl=US&ceid=US:en`;
+    } else if (searchMap[category]) {
+    const encodedQuery = encodeURIComponent(searchMap[category]);
+    url = `https://news.google.com/rss/search?q=${encodedQuery}&hl=en-US&gl=US&ceid=US:en`;
+    } else {
     throw new Error(`Unknown category: ${category}`);
-  }
+    }
+
+
 
   return xmlFetch(url).then((data) => {
-    const [title] = data.getElementsByTagName("title")[0]?.textContent?.split(" - ") || [ucfirst(category)];
+    let title = ucfirst(category);
+    const titleEl = data.getElementsByTagName("title")[0];
+    if (titleEl && titleEl.textContent) {
+    title = titleEl.textContent.split(" - ")[0];
+    }
 
     const items = Array.from(data.getElementsByTagName("item")).map(itemEl => {
       const titleEl = itemEl.getElementsByTagName("title")[0];
