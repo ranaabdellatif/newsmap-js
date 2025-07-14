@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Edition from './Edition.jsx';
 
 import { ucfirst, luminance } from '../util.js';
-import defaultColours, * as palettes from '../colours.js';
+import originalColours, * as palettes from '../colours.js';
 
 import editions from '../data/editions.json';
 import availableCategories from '../data/categories.json';
