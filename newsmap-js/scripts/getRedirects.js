@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const editions = require("../src/data/editions.json");
-//const categories = require("../src/data/categories.json");
-import { categories as availableCategories } from '../sources/GoogleNewsRSS';
+const categories = require("../src/data/categories.json");
+//import { categories as availableCategories } from '../sources/GoogleNewsRSS';
 const API_ROOT = "https://news.google.com";
 
 /*

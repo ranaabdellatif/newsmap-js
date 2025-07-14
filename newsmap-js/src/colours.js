@@ -1,34 +1,34 @@
 export const originalColours = {
-  "world":          "#9c1f1f",
-  "nation":         "#9c891f",
-  "business":       "#449c1f",
-  "technology":     "#1f9c66",
-  "sports":         "#1f689c",
-  "entertainment":  "#421f9c",
-  "health":         "#9c1f8b",
-  "science":        "#68429c",
+  "cybersecurity":          "#9c1f1f",
+  "security":         "#f6ed43ff",
+  "technology":       "#449c1f",
+  "technology":     "#4cd8f0ff",
+  "southern company":         "#196195ff",
+  "hacking":  "#ff0000ff",
+  "cyber attack":         "#2d5a0dff",
+  "cyber threat":        "#ffffffff",
 };
 
 export const primaryColours = {
-  "world":          "#FF0000",
-  "nation":         "#FFFF00",
-  "business":       "#40FF00",
+  "cybersecurity":          "#FF0000",
+  "security":         "#FFFF00",
+  "technology":       "#40FF00",
   "technology":     "#00BFFF",
-  "sports":         "#FF00FF",
-  "entertainment":  "#0000FF",
-  "health":         "#FF0080",
-  "science":        "#D8D8D8",
+  "southern company":         "#FF00FF",
+  "hacking":  "#0000FF",
+  "cyber attack":         "#FF0080",
+  "cyber threat":        "#D8D8D8",
 };
 
 export const rainbow = {
-  "world":          "#FF0000",
-  "nation":         "#FF8000",
-  "business":       "#FFFF00",
+  "cybersecurity":          "#FF0000",
+  "security":         "#FF8000",
+  "technology":       "#FFFF00",
   "technology":     "#00FF00",
-  "entertainment":  "#00FF80",
-  "sports":         "#0000FF",
-  "science":        "#800080",
-  "health":         "#808080",
+  "hacking":  "#00FF80",
+  "southern company":         "#0000FF",
+  "cyber threat":        "#800080",
+  "cyber attack":         "#808080",
 };
 
 export default originalColours;

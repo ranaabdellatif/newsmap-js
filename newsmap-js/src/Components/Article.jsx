@@ -33,6 +33,9 @@ export default function Article({
   const elementRef = useRef(/** @type {HTMLAnchorElement?} */(null));
   const [fontSize, setFontSize] = useState(10);
 
+  // Debug: log received props
+  console.log('Article props:', { item, showImage, showGradient, colours, style, onClick, newTab });
+
   const { title } = item;
   const { width, height } = style;
 
@@ -222,9 +225,9 @@ function getPadding(maxWidth, maxHeight) {
 }
 
 function getAgedColour(base, age) {
-  if (typeof base !== 'string' || base.length < 7) {
-    // Provide a fallback color (gray) if invalid
-    base = "#999999";
+  // Fallback to a default colour if base is missing or invalid
+  if (!base || typeof base !== "string" || !/^#[0-9a-fA-F]{6}$/.test(base)) {
+    return "#888888";
   }
 
   const k1 = 50 / 9;

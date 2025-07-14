@@ -6,9 +6,7 @@ import { ucfirst, luminance } from '../util.js';
 import defaultColours, * as palettes from '../colours.js';
 
 import editions from '../data/editions.json';
-// import availableCategories from '../data/categories.json';
-import { categories as availableCategories } from '../sources/GoogleNewsRSS';
-
+import availableCategories from '../data/categories.json';
 
 import './App.css';
 import { OptionsModal } from './OptionsModal.jsx';
@@ -67,7 +65,7 @@ class App extends Component {
     const defaultState = {
       categories: [],
       selectedCategories: availableCategories,
-      selectedEditions: ["GB_en"],
+      selectedEditions: ["US_en"],
       mode: "tree",
       showImages: false,
       showGradient: true,
@@ -94,7 +92,7 @@ class App extends Component {
     // Save selected Edition in case it has come from the query params
     // Will cause "Can't call setState on a component that is not yet mounted"
     // error.
-    this.setSavedState({ selectedEditions: this.state.selectedEditions });
+   // this.setSavedState({ selectedEditions: this.state.selectedEditions });
 
     this.onResize = this.onResize.bind(this);
     this.onCategoryChange = this.onCategoryChange.bind(this);
@@ -143,12 +141,36 @@ class App extends Component {
     }
 
     this.setSavedState({ selectedCategories });
+    // Fetch news for new categories
+    this.fetchNewsForCategories();
   }
 
   handleEditionChange(editions) {
     this.setSavedState({ selectedEditions: editions });
-
     this.setState({ categories: [] });
+    // Fetch news for new edition (if needed)
+    this.fetchNewsForCategories();
+  }
+
+  // Debug: log categories state after fetch
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.categories !== this.state.categories) {
+      console.log('App categories state updated:', this.state.categories);
+    }
+    // ...existing code...
+    if (this.state.wakeLock) {
+      if (!this.wakeLockRef) {
+        this.getWakeLock();
+      }
+    }
+    else {
+      if (this.wakeLockRef) {
+        this.wakeLockRef.release();
+        this.wakeLockRef = null;
+      }
+    }
+
+    this.updatePage();
   }
 
   setSavedState(newState) {
@@ -159,22 +181,17 @@ class App extends Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.onResize);
-    localStorage.removeItem("state");
-
-
     document.addEventListener("visibilitychange", this.visibilityChangeCallback);
-
     document.addEventListener("keyup", this.keyupListener);
-
     window.addEventListener("popstate", this.historyListener);
-
     if (window['gtag']) {
       this.trackingTimeout = setInterval(() => {
         window['gtag']('event', 'refresh');
       }, this.props.refreshTime || defaultRefreshTime);
     }
-
     this.updatePage(true);
+    // Fetch news for initial categories
+    this.fetchNewsForCategories();
   }
 
   componentWillUnmount() {
@@ -197,7 +214,7 @@ class App extends Component {
       this.setState({ wakeLock: false });
     });
   }
-
+/*
   componentDidUpdate() {
     if (this.state.wakeLock) {
       if (!this.wakeLockRef) {
@@ -213,7 +230,7 @@ class App extends Component {
 
     this.updatePage();
   }
-
+*/
   /**
    * @param {import('./Edition.jsx').Article} article
    * @param {import('react').MouseEvent} e
@@ -335,6 +352,34 @@ class App extends Component {
     );
   }
 
+  async fetchNewsForCategories() {
+    // Import getNews dynamically to avoid circular dependencies
+    const { getNews } = await import('../sources/GoogleNewsRSS');
+    const selectedCategories = this.state.selectedCategories;
+    const newsResults = await Promise.all(
+      selectedCategories.map(async (cat) => {
+        try {
+          const result = await getNews({ category: cat });
+          return {
+            id: cat,
+            name: cat,
+            articles: result.articles,
+            weight: 1,
+          };
+        } catch (e) {
+          console.error('Failed to fetch news for category', cat, e);
+          return {
+            id: cat,
+            name: cat,
+            articles: [],
+            weight: 1,
+          };
+        }
+      })
+    );
+    this.setState({ categories: newsResults });
+  }
+
   render() {
     const {
       refreshTime
@@ -380,7 +425,7 @@ class App extends Component {
                   showImages={showImages}
                   showGradient={showGradient}
                   colours={colours}
-                  categories={selectedCategories}
+                  categories={this.state.categories}
                   itemsPerCategory={itemsPerCategory}
                   refreshTime={refreshTime || defaultRefreshTime}
                   newTab={newTab}
