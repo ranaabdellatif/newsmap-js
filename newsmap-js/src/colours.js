@@ -6,6 +6,8 @@ export const originalColours = {
   "HACKING":  "#18851b",
   "CYBER ATTACK":         "#2b67b5", 
   "CYBER THREAT":        "#45d9d4",
+    "TECHNOLOGY":     "#a0a2a3",
+
 };
 
 export const primaryColours = {
